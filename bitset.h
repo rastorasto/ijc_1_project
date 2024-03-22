@@ -49,15 +49,11 @@ typedef unsigned long bitset_index_t;
         jmeno_pole[1 + index / bitset_size(jmeno_pole)] &= ~(1UL << (index % bitset_size(jmeno_pole))); \
     }
 
-#define bitset_getbit(jmeno_pole, index) \
-    if (index >= bitset_size(jmeno_pole) || index < 0) { \
-        error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1); \
-    } \
-    if (jmeno_pole[(1 + index) / bitset_size(jmeno_pole)] & (1UL << ((1 + index) % bitset_size(jmeno_pole)))) { \
-        return 1; \
-    } else { \
-        return 0; \
-    } 
+#define bitset_getbit(jmeno_pole,index) \
+    ((((index) >= bitset_size(jmeno_pole) || (index) < 0) ? \
+    (error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)(index), (unsigned long)bitset_size(jmeno_pole) - 1)) : \
+    (((jmeno_pole)[1 + (index) / bitset_size(jmeno_pole)] >> ((index) % bitset_size(jmeno_pole))) & 1)))
+
 
 #else
 inline void bitset_create(bitset_t jmeno_pole[], unsigned long velikost) {
