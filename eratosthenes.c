@@ -4,29 +4,21 @@
 // Přeloženo: gcc 10.2
 // ...popis příkladu - poznámky, omezení, atd
 
+#include "error.h"
 #include "bitset.h"
 #include <math.h>
+#include "eratosthenes.h"
 
-void Eratosthenes(bitset_t *array) {
-    bitset_index_t size = 666000000;
-    bitset_alloc(array, size);
-    bitset_fill(array, 1);
-
-    for (bitset_index_t i = 2; i * i < size; i++) {
-        if (bitset_getbit(array, i) == 1) {
-            for (bitset_index_t j = i * i; j < size; j += i) {
-                bitset_setbit(array, j, 0);
-            }
-        }
-    }
-
-    int count = 0;
-    for (bitset_index_t i = size - 1; i >= 2; i--) {
-        if (bitset_getbit(array, i) == 1) {
-            printf("%lu\n", i);
-            count++;
-            if (count == 10) {
-                break;
+void Eratosthenes(bitset_t pole) {
+    bitset_fill(pole, 1);
+    bitset_setbit(pole, 0, 0);
+    bitset_setbit(pole, 1, 0);
+    bitset_index_t index = 2;
+    bitset_index_t N = sqrt(pole[0]);
+    for (index = 2; index <= (bitset_index_t)sqrt(N); index++) {
+        if (bitset_getbit(pole, index)) { 
+            for (bitset_index_t j = index * index; j <= N; j += index) {
+                bitset_setbit(pole, j, 0); 
             }
         }
     }

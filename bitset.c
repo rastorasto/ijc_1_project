@@ -5,6 +5,7 @@
 // ...popis příkladu - poznámky, omezení, atd
 
 #include "bitset.h"
+#include "error.h"
 
 #ifdef USE_INLINE
 #define USE_INLINE

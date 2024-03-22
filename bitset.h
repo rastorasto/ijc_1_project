@@ -9,19 +9,21 @@
 
 #include "error.h"
 #include <stdlib.h>
+#include <assert.h>
+#include <stdbool.h>
 
-typedef unsigned long bitset_t;
+typedef unsigned long* bitset_t;
 typedef unsigned long bitset_index_t;
 
 #ifndef USE_INLINE
 
 #define bitset_create(jmeno_pole, velikost) \
-    static_assert(velikost <= 0, "Size must be greater than 0."); \
+    assert(velikost < 1); \
     bitset_t jmeno_pole[(velikost / (sizeof(bitset_index_t) * 8)) + ((velikost % (sizeof(bitset_index_t) * 8)) ? 2 : 1)] = {0}; \
     jmeno_pole[0] = velikost;
 
 #define bitset_alloc(jmeno_pole, velikost) \
-    static_assert(velikost <= 0, "Size must be greater than 0."); \
+    assert(velikost < 1); \
     bitset_t *jmeno_pole = calloc((velikost / (sizeof(bitset_index_t) * 8)) + ((velikost % (sizeof(bitset_index_t) * 8)) ? 2 : 1), sizeof(bitset_index_t)); \
     if (jmeno_pole == NULL) { \
         error_exit("bitset_alloc: Chyba alokace paměti.\n"); \
@@ -49,21 +51,20 @@ typedef unsigned long bitset_index_t;
         jmeno_pole[1 + index / bitset_size(jmeno_pole)] &= ~(1UL << (index % bitset_size(jmeno_pole))); \
     }
 
-#define bitset_getbit(jmeno_pole,index) \
-    ((((index) >= bitset_size(jmeno_pole) || (index) < 0) ? \
-    (error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)(index), (unsigned long)bitset_size(jmeno_pole) - 1)) : \
-    (((jmeno_pole)[1 + (index) / bitset_size(jmeno_pole)] >> ((index) % bitset_size(jmeno_pole))) & 1)))
-
-
+#define bitset_getbit(jmeno_pole, index) \
+    (((index) >= bitset_size(jmeno_pole) || (index) < 0) ? \
+    (error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)(index), (unsigned long)bitset_size(jmeno_pole) - 1), 0) : \
+    (((jmeno_pole)[1 + (index) / bitset_size(jmeno_pole)] >> ((index) % bitset_size(jmeno_pole))) & 1))
+    
 #else
 inline void bitset_create(bitset_t jmeno_pole[], unsigned long velikost) {
-    static_assert(velikost > 0, "Size must be greater than 0.");
-    jmeno_pole[(velikost / (sizeof(bitset_index_t) * 8)) + ((velikost % (sizeof(bitset_index_t) * 8)) ? 2 : 1)] = {0};
+    assert(velikost < 1);
+    jmeno_pole[(velikost / (sizeof(bitset_index_t) * 8)) + ((velikost % (sizeof(bitset_index_t) * 8)) ? 2 : 1)] = 0;
     jmeno_pole[0] = velikost;
 }
 
 inline bitset_t *bitset_alloc(unsigned long velikost) {
-    static_assert(velikost > 0, "Size must be greater than 0.");
+    assert(velikost < 1);
     bitset_t *jmeno_pole = calloc((velikost / (sizeof(bitset_index_t) * 8)) + ((velikost % (sizeof(bitset_index_t) * 8)) ? 2 : 1), sizeof(bitset_index_t));
     if (jmeno_pole == NULL) {
         error_exit("bitset_alloc: Chyba alokace paměti.\n");
@@ -80,13 +81,13 @@ inline unsigned long bitset_size(bitset_t *jmeno_pole) {
     return jmeno_pole[0];
 }
 
-inline void bitset_fill(bitset_t jmeno_pole[], bool bool_vyraz) {
+inline void bitset_fill(bitset_t jmeno_pole, bool bool_vyraz) {
     for (bitset_index_t i = 1; i <= bitset_size(jmeno_pole); i++) {
         jmeno_pole[i] = bool_vyraz ? 1UL : 0UL;
     }
 }
 
-inline void bitset_setbit(bitset_t jmeno_pole[], unsigned long index, int vyraz) {
+inline void bitset_setbit(bitset_t jmeno_pole, unsigned long index, int vyraz) {
     if (index >= bitset_size(jmeno_pole) || index < 0) {
         error_exit("bitset_setbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1);
     }
@@ -97,7 +98,7 @@ inline void bitset_setbit(bitset_t jmeno_pole[], unsigned long index, int vyraz)
     }
 }
 
-inline int bitset_getbit(bitset_t jmeno_pole[], unsigned long index) {
+inline int bitset_getbit(bitset_t jmeno_pole, unsigned long index) {
     if (index >= bitset_size(jmeno_pole) || index < 0) {
         error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1);
     }
