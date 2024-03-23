@@ -14,17 +14,17 @@ eratosthenes-i.o: eratosthenes.c
 	$(CC) $(CFLAGS) -DUSE_INLINE -c -o $@ $<
 
 primes: error.o eratosthenes.o primes.o
-	ulimit -s 100000 && $(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 primes-i: primes.o eratosthenes.o bitset.o error.o
-	ulimit -s 100000 && $(CC) $(CFLAGS) $(STACKFLAG) -DUSE_INLINE -o $@ $^ $(LDFLAGS)
+	$(CC) $(CFLAGS) $(STACKFLAG) -DUSE_INLINE -o $@ $^ $(LDFLAGS)
 
 no-comment: error.o no-comment.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 run: all
-	./primes
-	./primes-i
+	ulimit -s 100000 && ./primes
+	ulimit -s 100000 && ./primes-i
 
 clean:
 	rm -f $(TARGETS) *.o
