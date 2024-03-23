@@ -6,16 +6,8 @@ LDFLAGS =
 all: $(TARGETS)
 
 eratosthenes.o: eratosthenes.c eratosthenes.h bitset.h error.h
-	$(CC) $(CFLAGS) -c -o $@ $<
-
-error.o: error.c error.h
-	$(CC) $(CFLAGS) -c -o $@ $<
-
 primes.o: primes.c bitset.h error.h eratosthenes.h
-	$(CC) $(CFLAGS) -c -o $@ $<
-
-bitset.o: bitset.c bitset.h error.h
-	$(CC) $(CFLAGS) -c -o $@ $<
+no-comment.o: no-comment.c bitset.h error.h
 
 primes: error.o eratosthenes.o primes.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
