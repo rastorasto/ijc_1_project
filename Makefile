@@ -1,9 +1,9 @@
 CC = gcc
-M32FLAG =  
-CFLAGS = -O2 -std=c11 -Wall -pedantic $(M32FLAG)
+CFLAGS = -O2 -std=c11 -Wall -pedantic
 TARGETS = primes no-comment
+LDFLAGS = 
 
-all: primes no-comment
+all: $(TARGETS)
 
 eratosthenes.o: eratosthenes.c eratosthenes.h bitset.h error.h
 error.o: error.c error.h
