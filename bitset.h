@@ -43,13 +43,13 @@ typedef unsigned long bitset_index_t;
         jmeno_pole[i] = bool_vyraz ? ~0UL : 0UL; \
     }
 
-#define bitset_setbit(jmeno_pole,index,vyraz) ((index) > jmeno_pole[0]) ?\
+#define bitset_setbit(jmeno_pole,index,vyraz) (index >= jmeno_pole[0]) ?\
     error_exit("index %lu mimo rozsah 0..%lu", index, (jmeno_pole[0])), 0 :\
     ((vyraz) ?\
     (jmeno_pole[(index / BITS_IN_ULONG) + 1] |= (1UL << (index % BITS_IN_ULONG))) :\
     (jmeno_pole[(index / BITS_IN_ULONG) + 1] &= ~(1UL << (index % BITS_IN_ULONG))))
 
-#define bitset_getbit(jmeno_pole, index) ((index > jmeno_pole[0] || index < 0) ? \
+#define bitset_getbit(jmeno_pole, index) ((index >= jmeno_pole[0] || index < 0) ? \
     error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)(index), (unsigned long)bitset_size(jmeno_pole) - 1), 0 : \
     ((jmeno_pole[(index / BITS_IN_ULONG) + 1] >> (index % BITS_IN_ULONG)) & 1))
 
