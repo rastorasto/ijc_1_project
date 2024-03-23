@@ -53,14 +53,14 @@ typedef unsigned long bitset_index_t;
     ((jmeno_pole[(index / BITS_IN_ULONG) + 1] >> (index % BITS_IN_ULONG)) & 1))
 
 #else
-inline void bitset_create(bitset_t jmeno_pole[], unsigned long velikost) {
-    static_assert(velikost > 0 , "bitset_create: Chybná velikosť. \n" ); \
+inline void bitset_create(bitset_t jmeno_pole, unsigned long velikost) {
+    assert(velikost > 0); \
     jmeno_pole[(velikost / (sizeof(bitset_index_t) * 8)) + ((velikost % (sizeof(bitset_index_t) * 8)) ? 2 : 1)] = 0;
     jmeno_pole[0] = velikost;
 }
 
 inline bitset_t bitset_alloc(unsigned long velikost) {
-    static_assert(velikost > 0 , "bitset_create: Chybná velikosť. \n" ); \
+    assert(velikost > 0); \
     bitset_t jmeno_pole = calloc((velikost / (sizeof(bitset_index_t) * 8)) + ((velikost % (sizeof(bitset_index_t) * 8)) ? 2 : 1), sizeof(bitset_index_t));
     if (jmeno_pole == NULL) {
         error_exit("bitset_alloc: Chyba alokace paměti.\n");
