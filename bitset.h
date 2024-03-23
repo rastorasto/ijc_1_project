@@ -2,7 +2,7 @@
 // Řešení IJC-DU1, příklad a), 20.3.2111
 // Autor: Rastislav Uhliar, FIT
 // Přeloženo: gcc 10.2
-// ...popis příkladu - poznámky, omezení, atd
+// Makra a inline funkcie pre pracu s bitovym polom 
 
 #ifndef BITSET_H
 #define BITSET_H

@@ -2,7 +2,7 @@
 // Řešení IJC-DU1, příklad a), 20.3.2111
 // Autor: Rastislav Uhliar, FIT
 // Přeloženo: gcc 10.2
-// Program that removes comments from file or stdin
+// Program na odstránenie komentárov zo suboru alebo sdin
 
 #include <stdio.h>
 #include <stdlib.h>
