@@ -10,15 +10,21 @@
 #include "error.h"
 
 int main(void) {
-    bitset_create(pole, 1000);
+    const bitset_index_t size = 10000;
+    bitset_create(pole, size);
     Eratosthenes(pole);
 
     int count=0;
-    for (bitset_index_t i = 1000-1; i > 1 && count < 10; --i) {
+    unsigned long sorted[10] = {0};
+    for (bitset_index_t i = size-1; i > 1 && count < 10; --i) {
         if (bitset_getbit(pole, i)) {
-            printf("%lu\n", i);
-            ++count;
+            sorted[count++]=i;
+            // printf("%lu\n", i);
+            // ++count;
         }
+    }
+    for(bitset_index_t i = 0; i < 10; i++){
+        printf("%lu\n",sorted[(10-i)-1]);
     }
     // for(bitset_index_t i = 0; i < 10; i++){
     //         printf("%lu : %u\n",i, bitset_getbit(pole, i) ? 1 : 0);
