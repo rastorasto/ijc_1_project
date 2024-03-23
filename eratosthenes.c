@@ -15,7 +15,7 @@ void Eratosthenes(bitset_t pole) {
     bitset_setbit(pole, 1, 0);
     bitset_index_t N = sqrt(pole[0]);
 
-    for (bitset_index_t index = 2; index < N; index++) {
+    for (bitset_index_t index = 2; index <= N; index++) {
         if (bitset_getbit(pole, index)) {
             for (bitset_index_t j = index * index; j < pole[0]; j += index) {
                 bitset_setbit(pole, j, 0);
