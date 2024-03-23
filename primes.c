@@ -2,7 +2,7 @@
 // Řešení IJC-DU1, příklad a), 20.3.2111
 // Autor: Rastislav Uhliar, FIT
 // Přeloženo: gcc 10.2
-// Program ktory vypise posledny 10 prvocisel z rozsahu size
+// Program ktory vypise posledny 10 prvocisel z rozsahu
 
 #include "bitset.h"
 #include <stdio.h>
@@ -10,14 +10,13 @@
 #include "error.h"
 
 int main(void) {
-    const bitset_index_t size = 10000;
-    bitset_create(pole, size);
+    bitset_create(pole, 10000);
     Eratosthenes(pole);
 
     int count=0;
     unsigned long sorted[10] = {0};
     
-    for (bitset_index_t i = size-1; i > 1 && count < 10; --i) {
+    for (bitset_index_t i = 10000-1; i > 1 && count < 10; --i) {
         if (bitset_getbit(pole, i)) {
             sorted[count++]=i;
         }
