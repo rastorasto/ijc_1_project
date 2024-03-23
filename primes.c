@@ -8,8 +8,11 @@
 #include <stdio.h>
 #include "eratosthenes.h"
 #include "error.h"
+#include <time.h>
 
 int main(void) {
+    clock_t start = clock();
+
     bitset_create(pole, 666000000);
     Eratosthenes(pole);
 
@@ -25,5 +28,8 @@ int main(void) {
     for(bitset_index_t i = 0; i < 10; i++){
         printf("%lu\n",sorted[(10-i)-1]);
     }
+
+    fprintf(stderr, "Time=%.3g\n", (double)(clock()-start)/CLOCKS_PER_SEC);
+    
     return 0;
 }
