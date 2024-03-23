@@ -12,9 +12,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
-#include <limits.h>
 
-#define BITS_IN_LONG (CHAR_BIT * sizeof(unsigned long))
+#define BITS_IN_ULONG (8 * sizeof(unsigned long))
 typedef unsigned long* bitset_t;
 typedef unsigned long bitset_index_t;
 
@@ -23,12 +22,12 @@ typedef unsigned long bitset_index_t;
 
 #define bitset_create(jmeno_pole, velikost) \
     static_assert(velikost > 0 , "bitset_create: Chybná velikosť. \n" ); \
-    unsigned long jmeno_pole[(velikost / BITS_IN_LONG) + ((velikost % BITS_IN_LONG) ? 2 : 1)] = {0}; \
+    unsigned long jmeno_pole[(velikost / BITS_IN_ULONG) + ((velikost % BITS_IN_ULONG) ? 2 : 1)] = {0}; \
     jmeno_pole[0] = velikost;
 
 #define bitset_alloc(jmeno_pole, velikost) \
     static_assert(velikost > 0 , "bitset_create: Chybná velikosť. \n" ); \
-    bitset_t jmeno_pole = calloc((velikost / BITS_IN_LONG) + ((velikost % BITS_IN_LONG) ? 2 : 1), sizeof(bitset_index_t)); \
+    unsigned long jmeno_pole = calloc((velikost / BITS_IN_ULONG) + ((velikost % BITS_IN_ULONG) ? 2 : 1), sizeof(bitset_index_t)); \
     if (jmeno_pole == NULL) { \
         error_exit("bitset_alloc: Chyba alokace paměti.\n"); \
     } \
@@ -39,26 +38,19 @@ typedef unsigned long bitset_index_t;
 #define bitset_size(jmeno_pole) (jmeno_pole[0])
 
 #define bitset_fill(jmeno_pole, bool_vyraz) \
-    do { \
-        for (bitset_index_t i = 1; i <= (bitset_size(pole)/sizeof(bitset_index_t))+1; i++) { \
-            jmeno_pole[i] = bool_vyraz ? ~0UL : 0UL; \
-        } \
-    } while(0)
-
-#define bitset_setbit(jmeno_pole, index, vyraz) \
-    if (index > bitset_size(jmeno_pole) || index < 0) { \
-        error_exit("bitset_setbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1); \
-    } \
-    if (vyraz) { \
-        jmeno_pole[(index / BITS_IN_LONG) +1] |= 1UL << ((index % BITS_IN_LONG)); \
-    } else { \
-        jmeno_pole[(index / BITS_IN_LONG) +1] &= ~(1UL << ((index % BITS_IN_LONG))); \
+    for (bitset_index_t i = 1; i < (jmeno_pole[0] / BITS_IN_ULONG) + ((jmeno_pole[0] % BITS_IN_ULONG) ? 2 : 1); i++) { \
+        jmeno_pole[i] = bool_vyraz ? ~0UL : 0UL; \
     }
 
-#define bitset_getbit(jmeno_pole, index) \
-    (((index) > bitset_size(jmeno_pole) || (index) < 0) ? \
-    (error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)(index), (unsigned long)bitset_size(jmeno_pole) - 1), 0) : \
-    ((jmeno_pole[(index / BITS_IN_LONG)+1] >> ((index % BITS_IN_LONG))) & 1))
+#define bitset_setbit(jmeno_pole,index,vyraz) ((index) > jmeno_pole[0]) ?\
+    error_exit("index %lu mimo rozsah 0..%lu", index, (jmeno_pole[0])), 2 :\
+    ((vyraz) ?\
+    (jmeno_pole[((index) / BITS_IN_ULONG) + 1] |= (1UL << ((index) % BITS_IN_ULONG))) :\
+    (jmeno_pole[((index) / BITS_IN_ULONG) + 1] &= ~(1UL << ((index) % BITS_IN_ULONG))))
+
+#define bitset_getbit(jmeno_pole,index) (((index) > jmeno_pole[0]) ?\
+    error_exit("index %lu mimo rozsah 0..%lu", index, (jmeno_pole[0])), 2 :\
+    !!(jmeno_pole[((index) / BITS_IN_ULONG) + 1] & (1UL << ((index) % BITS_IN_ULONG))))
     
 #else
 inline void bitset_create(bitset_t jmeno_pole[], unsigned long velikost) {
@@ -69,7 +61,7 @@ inline void bitset_create(bitset_t jmeno_pole[], unsigned long velikost) {
 
 inline bitset_t bitset_alloc(unsigned long velikost) {
     static_assert(velikost > 0 , "bitset_create: Chybná velikosť. \n" ); \
-    bitset_t *jmeno_pole = calloc((velikost / (sizeof(bitset_index_t) * 8)) + ((velikost % (sizeof(bitset_index_t) * 8)) ? 2 : 1), sizeof(bitset_index_t));
+    bitset_t jmeno_pole = calloc((velikost / (sizeof(bitset_index_t) * 8)) + ((velikost % (sizeof(bitset_index_t) * 8)) ? 2 : 1), sizeof(bitset_index_t));
     if (jmeno_pole == NULL) {
         error_exit("bitset_alloc: Chyba alokace paměti.\n");
     }
@@ -77,11 +69,11 @@ inline bitset_t bitset_alloc(unsigned long velikost) {
     return jmeno_pole;
 }
 
-inline void bitset_free(bitset_t *jmeno_pole) {
+inline void bitset_free(bitset_t jmeno_pole) {
     free(jmeno_pole);
 }
 
-inline unsigned long bitset_size(bitset_t *jmeno_pole) {
+inline unsigned long bitset_size(bitset_t jmeno_pole) {
     return jmeno_pole[0];
 }
 

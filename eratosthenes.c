@@ -11,11 +11,11 @@
 
 void Eratosthenes(bitset_t pole) {
     bitset_fill(pole, 1);
-    bitset_setbit(pole, 0, 0);
+   // bitset_setbit(pole, 0, 0);
     bitset_setbit(pole, 1, 0);
     bitset_setbit(pole, 2, 0);
-    bitset_setbit(pole, 3, 0);
-    bitset_setbit(pole, 6, 0);
+    // bitset_setbit(pole, 3, 0);
+    // bitset_setbit(pole, 6, 0);
     //bitset_index_t index = 2;
    // bitset_index_t N = sqrt(pole[0]);
 
