@@ -6,8 +6,8 @@
 
 #include "error.h"
 #include "bitset.h"
-#include <math.h>
 #include "eratosthenes.h"
+#include <math.h>
 
 void Eratosthenes(bitset_t pole) {
     bitset_fill(pole, 1);
@@ -16,7 +16,7 @@ void Eratosthenes(bitset_t pole) {
     bitset_index_t index = 2;
     bitset_index_t N = bitset_size(pole);
 
-    for (; index <= sqrt(N); index++) {
+    for (; index * index <= N; index++) {
         if (bitset_getbit(pole, index)) {
             bitset_index_t j;
             for (j = index * index; j < N; j += index) {
