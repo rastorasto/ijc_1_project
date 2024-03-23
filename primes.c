@@ -10,13 +10,13 @@
 #include "error.h"
 
 int main(void) {
-    bitset_create(pole, 10000);
+    bitset_create(pole, 400000000);
     Eratosthenes(pole);
 
     int count=0;
     unsigned long sorted[10] = {0};
     
-    for (bitset_index_t i = 10000-1; i > 1 && count < 10; --i) {
+    for (bitset_index_t i = 400000000-1; i > 1 && count < 10; --i) {
         if (bitset_getbit(pole, i)) {
             sorted[count++]=i;
         }
