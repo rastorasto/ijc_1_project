@@ -6,14 +6,14 @@
 
 #include "bitset.h"
 #include "error.h"
+#include <assert.h>
 
 #ifdef USE_INLINE
-#define USE_INLINE
-extern inline void biset_create(bitset_t jmeno_pole[], bitset_index_t velikost);
-extern inline void bitset_alloc(bitset_t *jmeno_pole, bitset_index_t velikost);
-extern inline void bitset_free(bitset_t *jmeno_pole);
-extern inline bitset_index_t bitset_size(bitset_t *jmeno_pole);
-extern inline void bitset_fill(bitset_t *jmeno_pole, int bool_vyraz);
-extern inline void bitset_setbit(bitset_t *jmeno_pole, bitset_index_t index, int vyraz);
-extern inline int bitset_getbit(bitset_t *jmeno_pole, bitset_index_t index);
+extern inline void biset_create(bitset_t jmeno_pole, bitset_index_t velikost);
+extern inline void bitset_alloc(bitset_t jmeno_pole, bitset_index_t velikost);
+extern inline void bitset_free(bitset_t jmeno_pole);
+extern inline bitset_index_t bitset_size(bitset_t jmeno_pole);
+extern inline void bitset_fill(bitset_t jmeno_pole, int bool_vyraz);
+extern inline void bitset_setbit(bitset_t jmeno_pole, bitset_index_t index, int vyraz);
+extern inline int bitset_getbit(bitset_t jmeno_pole, bitset_index_t index);
 #endif
