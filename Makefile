@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -fsanitize=address -O2 -std=c11 -Wall -pedantic
+CFLAGS = -O2 -std=c11 -Wall -pedantic
 TARGETS = primes no-comment
 LDFLAGS = -lm
 
@@ -17,3 +17,6 @@ no-comment: error.o no-comment.o
 
 clean:
 	rm -f $(TARGETS) *.o
+
+zip:
+	zip xuhliar00.zip *.c *.h Makefile

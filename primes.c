@@ -14,7 +14,7 @@ int main(void) {
     Eratosthenes(pole);
 
     int count=0;
-    for (bitset_index_t i = 1000-1; i > 1 && count < 1000; --i) {
+    for (bitset_index_t i = 1000-1; i > 1 && count < 10; --i) {
         if (bitset_getbit(pole, i)) {
             printf("%lu\n", i);
             ++count;
