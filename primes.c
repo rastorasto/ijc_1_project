@@ -10,7 +10,7 @@
 #include "error.h"
 
 int main(void) {
-    bitset_alloc(pole, 10);
+    bitset_create(pole, 10);
     Eratosthenes(pole);
 
     // int count=0;
