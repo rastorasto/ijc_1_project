@@ -9,13 +9,14 @@
 #include "eratosthenes.h"
 #include "error.h"
 
-int main(main) {
-    bitset_t pole;
-    bitset_create(pole, 66000000UL);
+int main(void) {
+    bitset_create(pole, 80);
     Eratosthenes(pole);
-    unsigned long count = 0;
-    for (bitset_index_t i = 0; i < sizeof(pole); i++) {
-        printf("%lu\n", pole[i]);
+
+    for(bitset_index_t i = 3; i < 20; i++){
+        if(bitset_getbit(pole, i)) {
+            printf("%lu\n", i);
+        }
     }
     return 0;
 }
