@@ -16,8 +16,8 @@ eratosthenes-i.o: eratosthenes.c
 primes: error.o eratosthenes.o primes.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-primes-i: error.o eratosthenes-i.o primes-i.o
-	$(CC) $(CFLAGS) -DUSE_INLINE -o $@ $< $(LDFLAGS)
+primes-i: primes.o eratosthenes.o bitset.o error.o
+	$(CC) $(CFLAGS) $(STACKFLAG) -DUSE_INLINE -o $@ $^ $(LDFLAGS)
 
 no-comment: error.o no-comment.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
