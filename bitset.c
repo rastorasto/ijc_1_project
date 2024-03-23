@@ -9,8 +9,6 @@
 #include <assert.h>
 
 #ifdef USE_INLINE
-extern inline void biset_create(bitset_t jmeno_pole, bitset_index_t velikost);
-extern inline void bitset_alloc(bitset_t jmeno_pole, bitset_index_t velikost);
 extern inline void bitset_free(bitset_t jmeno_pole);
 extern inline bitset_index_t bitset_size(bitset_t jmeno_pole);
 extern inline void bitset_fill(bitset_t jmeno_pole, int bool_vyraz);
