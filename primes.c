@@ -10,15 +10,18 @@
 #include "error.h"
 
 int main(void) {
-    bitset_alloc(pole, 10000);
+    bitset_alloc(pole, 10);
     Eratosthenes(pole);
 
-    int count=0;
-    for (bitset_index_t i = 10000 - 1; i > 1 && count < 10; --i) {
-        if (bitset_getbit(pole, i)) {
-            printf("%lu\n", i);
-            ++count;
-        }
+    // int count=0;
+    // for (bitset_index_t i = 10 - 1; i > 1 && count < 10; --i) {
+    //     if (bitset_getbit(pole, i)) {
+    //         printf("%lu\n", i);
+    //         ++count;
+    //     }
+    // }
+    for(bitset_index_t i = 0; i < 10; i++){
+            printf("%lu : %u\n",i, bitset_getbit(pole, i) ? 1 : 0);
     }
     return 0;
 }
