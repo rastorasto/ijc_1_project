@@ -21,18 +21,5 @@ int main(void) {
         }
     }
     bitset_free(pole);
-   // printf("%lu\n",sizeof(pole)/sizeof(bitset_index_t));  
-    // for (bitset_index_t i = 0; i < 5; i++)
-    // {
-
-    //     printf("%lu\n",pole[i]);
-    // }
-    // bitset_fill(pole,0);
-    //     for (bitset_index_t i = 0; i < 5; i++)
-    // {
-
-    //     printf("%lu\n",pole[i]);
-    // }
-    
     return 0;
 }
