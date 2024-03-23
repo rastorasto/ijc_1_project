@@ -12,7 +12,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <limits.h>
 
+#define BITS_IN_LONG (CHAR_BIT * sizeof(unsigned long))
 typedef unsigned long* bitset_t;
 typedef unsigned long bitset_index_t;
 
@@ -38,8 +40,8 @@ typedef unsigned long bitset_index_t;
 
 #define bitset_fill(jmeno_pole, bool_vyraz) \
     do { \
-        for (bitset_index_t i = 1; i <= bitset_size(jmeno_pole); i++) { \
-            jmeno_pole[i] = bool_vyraz ? 1UL : 0UL; \
+        for (bitset_index_t i = 1; i <= sizeof(&jmeno_pole)/sizeof(bitset_index_t); i++) { \
+            jmeno_pole[i] = bool_vyraz ? ~0UL : 0UL; \
         } \
     } while(0)
 
@@ -48,9 +50,9 @@ typedef unsigned long bitset_index_t;
         error_exit("bitset_setbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1); \
     } \
     if (vyraz) { \
-        jmeno_pole[1 + index / bitset_size(jmeno_pole)] |= 1UL << (index % bitset_size(jmeno_pole)); \
+        jmeno_pole[index / BITS_IN_LONG +1] |= 1UL << (index % BITS_IN_LONG); \
     } else { \
-        jmeno_pole[1 + index / bitset_size(jmeno_pole)] &= ~(1UL << (index % bitset_size(jmeno_pole))); \
+        jmeno_pole[index / BITS_IN_LONG +1] &= ~(1UL << (index % BITS_IN_LONG)); \
     }
 
 #define bitset_getbit(jmeno_pole, index) \
@@ -85,7 +87,7 @@ inline unsigned long bitset_size(bitset_t *jmeno_pole) {
 
 inline void bitset_fill(bitset_t jmeno_pole, bool bool_vyraz) {
     for (bitset_index_t i = 1; i <= bitset_size(jmeno_pole); i++) {
-        jmeno_pole[i] = bool_vyraz ? 1UL : 0UL;
+        jmeno_pole[i] = bool_vyraz ? ~0UL : 0UL;
     }
 }
 

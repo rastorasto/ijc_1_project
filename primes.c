@@ -10,13 +10,11 @@
 #include "error.h"
 
 int main(void) {
-    bitset_create(pole, 80);
+    bitset_create(pole, 500);
     Eratosthenes(pole);
 
-    for(bitset_index_t i = 3; i < 20; i++){
-        if(bitset_getbit(pole, i)) {
-            printf("%lu\n", i);
-        }
+    for(bitset_index_t i = 0; i < 500; i++){
+        printf("%lu : %d\n",i,bitset_getbit(pole, i) ? 1 : 0);
     }
     return 0;
 }
