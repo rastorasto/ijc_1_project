@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -O2 -std=c11 -Wall -pedantic
 TARGETS = primes no-comment
-LDFLAGS = 
+LDFLAGS = -lm
 
 all: $(TARGETS)
 

@@ -20,6 +20,5 @@ int main(void) {
             ++count;
         }
     }
-    bitset_free(pole);
     return 0;
 }
