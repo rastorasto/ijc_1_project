@@ -44,7 +44,7 @@ typedef unsigned long bitset_index_t;
     }
 
 #define bitset_setbit(jmeno_pole,index,vyraz) (index > jmeno_pole[0]) ?\
-    error_exit("index %lu mimo rozsah 0..%lu", index, (jmeno_pole[0])), 0 :\
+    error_exit("index %lu mimo rozsah 0..%lu", index, (jmeno_pole[0])), 2 :\
     ((vyraz) ?\
     (jmeno_pole[(index / BITS_IN_ULONG) + 1] |= (1UL << (index % BITS_IN_ULONG))) :\
     (jmeno_pole[(index / BITS_IN_ULONG) + 1] &= ~(1UL << (index % BITS_IN_ULONG))))
