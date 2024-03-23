@@ -23,12 +23,12 @@ typedef unsigned long bitset_index_t;
 
 #define bitset_create(jmeno_pole, velikost) \
     static_assert(velikost > 0 , "bitset_create: Chybná velikosť. \n" ); \
-    unsigned long jmeno_pole[(velikost / (sizeof(bitset_index_t) * 8)) + ((velikost % (sizeof(bitset_index_t) * 8)) ? 2 : 1)] = {0}; \
+    unsigned long jmeno_pole[(velikost / BITS_IN_LONG) + ((velikost % BITS_IN_LONG) ? 2 : 1)] = {0}; \
     jmeno_pole[0] = velikost;
 
 #define bitset_alloc(jmeno_pole, velikost) \
     static_assert(velikost > 0 , "bitset_create: Chybná velikosť. \n" ); \
-    bitset_t jmeno_pole = calloc((velikost / (sizeof(bitset_index_t) * 8)) + ((velikost % (sizeof(bitset_index_t) * 8)) ? 2 : 1), sizeof(bitset_index_t)); \
+    bitset_t jmeno_pole = calloc((velikost / BITS_IN_LONG) + ((velikost % BITS_IN_LONG) ? 2 : 1), sizeof(bitset_index_t)); \
     if (jmeno_pole == NULL) { \
         error_exit("bitset_alloc: Chyba alokace paměti.\n"); \
     } \
@@ -50,15 +50,15 @@ typedef unsigned long bitset_index_t;
         error_exit("bitset_setbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)index, (unsigned long)bitset_size(jmeno_pole) - 1); \
     } \
     if (vyraz) { \
-        jmeno_pole[(index / BITS_IN_LONG) +1] |= 1UL << ((index % BITS_IN_LONG)+1); \
+        jmeno_pole[(index / BITS_IN_LONG) +1] |= 1UL << ((index % BITS_IN_LONG)); \
     } else { \
-        jmeno_pole[(index / BITS_IN_LONG) +1] &= ~(1UL << ((index % BITS_IN_LONG)+1)); \
+        jmeno_pole[(index / BITS_IN_LONG) +1] &= ~(1UL << ((index % BITS_IN_LONG))); \
     }
 
 #define bitset_getbit(jmeno_pole, index) \
     (((index) > bitset_size(jmeno_pole) || (index) < 0) ? \
     (error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)(index), (unsigned long)bitset_size(jmeno_pole) - 1), 0) : \
-    ((jmeno_pole[(index / BITS_IN_LONG)+1] >> ((index % BITS_IN_LONG)+1)) & 1))
+    ((jmeno_pole[(index / BITS_IN_LONG)+1] >> ((index % BITS_IN_LONG))) & 1))
     
 #else
 inline void bitset_create(bitset_t jmeno_pole[], unsigned long velikost) {
