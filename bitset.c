@@ -1,7 +1,7 @@
 // bitset.c
-// Řešení IJC-DU1, příklad a), 20.3.2111
+// Řešení IJC-DU1, příklad a), 21.3.2024
 // Autor: Rastislav Uhliar, FIT
-// Přeloženo: gcc 10.2
+// Přeloženo: gcc 10.5.0
 // Makra a inline funkcie pre pracu s bitovym polom
 
 #include "bitset.h"
