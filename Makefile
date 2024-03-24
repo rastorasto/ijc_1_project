@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -std=c11 -pedantic -Wall -Wextra
+CFLAGS = -O2 -g -std=c11 -pedantic -Wall -Wextra
 TARGETS = primes no-comment primes-i
 LDFLAGS = -lm
 
