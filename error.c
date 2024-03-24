@@ -1,7 +1,7 @@
 // error.c
-// Řešení IJC-DU1, příklad a), 20.3.2111
+// Řešení IJC-DU1, příklad a), 21.3.2024
 // Autor: Rastislav Uhliar, FIT
-// Přeloženo: gcc 10.2
+// Přeloženo: gcc 10.5.0
 // Funkcie pre vypisovanie warning a error sprav
 
 #include "error.h"
