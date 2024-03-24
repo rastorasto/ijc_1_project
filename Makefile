@@ -10,9 +10,6 @@ primes.o: primes.c bitset.h error.h eratosthenes.h
 primes-i.o: eratosthenes.c bitset.h error.h
 no-comment.o: no-comment.c bitset.h error.h
 
-eratosthenes-i.o: eratosthenes.c
-	$(CC) $(CFLAGS) -DUSE_INLINE -c -o $@ $<
-
 primes: error.o eratosthenes.o primes.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
