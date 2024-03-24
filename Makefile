@@ -1,5 +1,10 @@
+# Makefile
+# Řešení IJC-DU1, příklad a), 20.3.2111
+# Autor: Rastislav Uhliar, FIT
+# Makefile na vytvorenie programov primes, primes-i a no-comment
+
 CC = gcc
-CFLAGS = -O2 -g -std=c11 -pedantic -Wall -Wextra
+CFLAGS = -g -std=c11 -pedantic -Wall -Wextra
 TARGETS = primes no-comment primes-i
 LDFLAGS = -lm
 
@@ -10,7 +15,7 @@ primes.o: primes.c bitset.h error.h eratosthenes.h
 primes-i.o: eratosthenes.c bitset.h error.h
 no-comment.o: no-comment.c bitset.h error.h
 
-primes: error.o eratosthenes.o primes.o
+primes: error.o eratosthenes.o bitset.o primes.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 primes-i: primes.o eratosthenes.o bitset.o error.o

@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
+// Prints a warning message
 void warning(const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
@@ -17,6 +18,7 @@ void warning(const char *fmt, ...) {
     va_end(args);
 }
 
+// Prints an error message and exits the program
 void error_exit(const char *fmt, ...){
     va_list args;
     va_start(args, fmt);
